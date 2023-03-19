@@ -26,6 +26,15 @@ class UserController {
 
         return res.json(auth);
     }
+
+    async searchUser(req: Request, res: Response) {
+        const user_id = req?.user_id
+
+        const searchUserService = new UserService();
+
+        const user = await searchUserService.search(user_id)
+        res.json(user)
+    }
 }
 
 export default UserController;
