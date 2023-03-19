@@ -2,7 +2,8 @@ import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import prismaClient from "../../prisma";
 import IAuthRequest from "../../models/interfaces/auth/IAuthRequest";
-import IUserRequest from "../../models/interfaces/user/IUserRequest";
+import ICreateRequest from "../../models/interfaces/user/ICreateRequest";
+import IRemoveRequest from "../../models/interfaces/user/IRemoveRequest";
 
 class UserService {
     async auth({ email, password }: IAuthRequest) {
@@ -51,7 +52,7 @@ class UserService {
         };
     }
 
-    async register({ name, email, password }: IUserRequest) {
+    async register({ name, email, password }: ICreateRequest) {
         if (!email) {
             throw new Error("Email incorrect");
         }
@@ -98,6 +99,25 @@ class UserService {
             });
             return user;
         }
+    }
+
+    async remove({ user_id }: IRemoveRequest) {
+        const userExist = await prismaClient.user.findFirst({
+            where: {
+                id: user_id
+            }
+        })
+
+        if (!userExist) {
+            throw new Error("There was not found any user with this id!");
+        }
+
+        const removeUser = await prismaClient.user.delete({
+            where: {
+                id: user_id,
+            },
+        });
+        return removeUser;
     }
 }
 

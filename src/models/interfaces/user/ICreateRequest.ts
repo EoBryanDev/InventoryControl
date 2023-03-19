@@ -1,4 +1,4 @@
-export default interface IUserRequest {
+export default interface ICreateRequest {
     name: string;
     email: string;
     password: string;
