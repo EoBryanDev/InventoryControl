@@ -4,7 +4,7 @@ import UserService from "../../services/user/UserService";
 import ICreateRequest from "../../models/interfaces/user/ICreateRequest";
 import IAuthRequest from "../../models/interfaces/auth/IAuthRequest";
 
-class UserController {
+export default class UserController {
     async createUser(req: Request, res: Response) {
         try {
             const { name, email, password }: ICreateRequest = req.body;
@@ -63,5 +63,3 @@ class UserController {
         }
     }
 }
-
-export default UserController;
