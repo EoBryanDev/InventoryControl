@@ -5,6 +5,7 @@ import uploadConfig from "./config/multer";
 
 import CategoryController from "./controllers/category/CategoryController";
 import ProductController from "./controllers/product/ProductController";
+import SaleProductController from "./controllers/sale/SaleProductController";
 import UserController from "./controllers/user/UserController";
 
 import { checkAuth } from "./middlewares/checkAuth";
@@ -19,6 +20,7 @@ router.get("/test", (req: Request, res: Response) => {
 const User = new UserController();
 const Category = new CategoryController();
 const Product = new ProductController();
+const Sale = new SaleProductController();
 // User Routes
 router.post("/user", User.createUser);
 router.post("/session", User.authUser);
@@ -47,6 +49,9 @@ router.put(
 router.get("/product", checkAuth, Product.listProductByCategory);
 router.get("/products", checkAuth, Product.listAllProducts);
 router.delete("/product/remove", checkAuth, Product.removeProduct);
+
+// Sale Routes
+router.put("/sale/product", checkAuth, Sale.sellProduct)
 
 
 export { router };
